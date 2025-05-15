@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		811E5D332D6D1392007BD30F /* FocusIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		811E5D332D6D1392007BD30F /* PlaneIndicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlaneIndicator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		81A8D4782DD3CCBC004BCDA8 /* Exceptions for "FocusIndicator" folder in "PlaneIndicator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 811E5D322D6D1392007BD30F /* PlaneIndicator */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		811E5D352D6D1392007BD30F /* FocusIndicator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				81A8D4782DD3CCBC004BCDA8 /* Exceptions for "FocusIndicator" folder in "PlaneIndicator" target */,
+			);
 			path = FocusIndicator;
 			sourceTree = "<group>";
 		};
@@ -40,7 +53,7 @@
 		811E5D342D6D1392007BD30F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				811E5D332D6D1392007BD30F /* FocusIndicator.app */,
+				811E5D332D6D1392007BD30F /* PlaneIndicator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +61,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		811E5D322D6D1392007BD30F /* FocusIndicator */ = {
+		811E5D322D6D1392007BD30F /* PlaneIndicator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 811E5D412D6D1393007BD30F /* Build configuration list for PBXNativeTarget "FocusIndicator" */;
+			buildConfigurationList = 811E5D412D6D1393007BD30F /* Build configuration list for PBXNativeTarget "PlaneIndicator" */;
 			buildPhases = (
 				811E5D2F2D6D1392007BD30F /* Sources */,
 				811E5D302D6D1392007BD30F /* Frameworks */,
@@ -63,11 +76,11 @@
 			fileSystemSynchronizedGroups = (
 				811E5D352D6D1392007BD30F /* FocusIndicator */,
 			);
-			name = FocusIndicator;
+			name = PlaneIndicator;
 			packageProductDependencies = (
 			);
 			productName = FocusIndicator;
-			productReference = 811E5D332D6D1392007BD30F /* FocusIndicator.app */;
+			productReference = 811E5D332D6D1392007BD30F /* PlaneIndicator.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 811E5D2E2D6D1392007BD30F /* Build configuration list for PBXProject "FocusIndicator" */;
+			buildConfigurationList = 811E5D2E2D6D1392007BD30F /* Build configuration list for PBXProject "PlaneIndicator" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				811E5D322D6D1392007BD30F /* FocusIndicator */,
+				811E5D322D6D1392007BD30F /* PlaneIndicator */,
 			);
 		};
 /* End PBXProject section */
@@ -255,6 +268,8 @@
 				DEVELOPMENT_TEAM = ZCQ4VSC547;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FocusIndicator/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "O app usa a câmera para habilitar as funcionalidades de AR";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +299,8 @@
 				DEVELOPMENT_TEAM = ZCQ4VSC547;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FocusIndicator/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "O app usa a câmera para habilitar as funcionalidades de AR";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -305,7 +322,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		811E5D2E2D6D1392007BD30F /* Build configuration list for PBXProject "FocusIndicator" */ = {
+		811E5D2E2D6D1392007BD30F /* Build configuration list for PBXProject "PlaneIndicator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				811E5D3F2D6D1393007BD30F /* Debug */,
@@ -314,7 +331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		811E5D412D6D1393007BD30F /* Build configuration list for PBXNativeTarget "FocusIndicator" */ = {
+		811E5D412D6D1393007BD30F /* Build configuration list for PBXNativeTarget "PlaneIndicator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				811E5D422D6D1393007BD30F /* Debug */,

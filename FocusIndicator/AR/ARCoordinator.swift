@@ -7,26 +7,31 @@
 import ARKit
 import RealityKit
 
-class ARCoordinator: NSObject, ARSessionDelegate{
+class ARCoordinator: NSObject, ObservableObject, PlaneIndicatorDelegate{
+  
+    var planeIndicator: PlaneIndicator?
+    
     var arView: ARView?
-    var focusIndicator: PlaneIndicator?
     let robotAnchor = AnchorEntity(world: SIMD3(x: 0, y: 0, z: 0))
     
-    @MainActor func setup(arView: ARView){
+    @Published var indicatorState: IndicatorState = .disabled
+    
+    @MainActor
+    func setup(arView: ARView){
         self.arView = arView
         
-        focusIndicator = PlaneIndicator()
-        focusIndicator?.setup(arView: arView)
+        planeIndicator = PlaneIndicator(arView: arView)
+        planeIndicator?.setup()
+        planeIndicator?.delegate = self
     }
     
     func placeRobot(){
-        guard let focusIndicator else { return }
+        guard let planeIndicator else { return }
         
-        
-        if focusIndicator.state == .detecting{
+        if planeIndicator.state == .detecting{
             guard let arView,
-            let position = focusIndicator.position,
-            let orientation = focusIndicator.orientation else {return}
+            let position = planeIndicator.position,
+            let orientation = planeIndicator.orientation else {return}
             
             var robotEntity = ModelEntity()
             
@@ -42,5 +47,10 @@ class ARCoordinator: NSObject, ARSessionDelegate{
             robotAnchor.addChild(robotEntity)
             arView.scene.addAnchor(robotAnchor)
         }
+    }
+    
+    func indicatorDidChangeState(newState: IndicatorState) {
+        indicatorState = newState
+        print("Novo estado: \(newState)")
     }
 }

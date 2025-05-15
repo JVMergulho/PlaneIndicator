@@ -8,18 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    var ARView = ARContainerView()
+    @EnvironmentObject var coordinator: ARCoordinator
     
+    var isButtonDisabled: Bool {
+        if coordinator.indicatorState != .detecting {
+            return true
+        } else {
+            return false
+        }
+    }
+
     var body: some View {
-        ZStack{
-            ARView
+        ZStack {
+            ARContainerView()
                 .edgesIgnoringSafeArea(.all)
-            
-            VStack{
+
+            VStack {
                 Spacer()
                 
                 Button(action:{
-                    ARView.coordinator.placeRobot()
+                    coordinator.placeRobot()
                 }, label:{
                     Text("Add Robot")
                         .foregroundStyle(.white)
@@ -28,6 +36,8 @@ struct ContentView: View {
                         .background(.red)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                 })
+                .opacity(isButtonDisabled ? 0.5 : 1)
+                .disabled(isButtonDisabled)
                 .padding(.bottom, 80)
             }
         }

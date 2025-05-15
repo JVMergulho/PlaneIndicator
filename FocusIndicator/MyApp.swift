@@ -6,9 +6,12 @@ import SwiftUI
 
 @main
 struct MyApp: App {
+    @StateObject var coordinator = ARCoordinator()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(coordinator)
         }
     }
 }

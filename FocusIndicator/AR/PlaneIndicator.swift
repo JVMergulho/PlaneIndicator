@@ -1,20 +1,23 @@
 import ARKit
 import RealityKit
 
-enum FocusState{
+enum IndicatorState{
     case searching
     case detecting
     case disabled
 }
 
+protocol PlaneIndicatorDelegate: AnyObject {
+    func indicatorDidChangeState(newState: IndicatorState)
+}
+
 class PlaneIndicator: NSObject, ARSessionDelegate {
     private var target: ModelEntity?
-    private var arView: ARView?
+    private var arView: ARView
     
-    private var isSearching: Bool = true
-    private var isDetecting: Bool = true
+    weak var delegate: PlaneIndicatorDelegate?
     
-    var state: FocusState = .searching
+    var state: IndicatorState = .searching
     
     var position: SIMD3<Float>?{
         return target?.position
@@ -24,8 +27,12 @@ class PlaneIndicator: NSObject, ARSessionDelegate {
         return target?.orientation
     }
     
-    @MainActor func setup(arView: ARView) {
+    init(arView: ARView) {
         self.arView = arView
+    }
+    
+    @MainActor
+    func setup() {
         arView.session.delegate = self // Definindo como delegate da sessão ARKit
         
         let planeMesh = MeshResource.generatePlane(width: 0.3, depth: 0.3)
@@ -41,17 +48,19 @@ class PlaneIndicator: NSObject, ARSessionDelegate {
         anchor.addChild(target)
         arView.scene.addAnchor(anchor)
         
-        applyTexture("target")
+        applyTexture("square")
+        enable()
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         Task { @MainActor in
-            updateFocusIndicator()
+            updatePlaneIndicator()
         }
     }
 
-    @MainActor func updateFocusIndicator() {
-        guard let arView, let target else { return }
+    @MainActor
+    func updatePlaneIndicator() {
+        guard let target else { return }
 
         let viewportCenter = CGPoint(x: arView.bounds.midX, y: arView.bounds.midY)
         let raycastResults = arView.raycast(from: viewportCenter, allowing: .estimatedPlane, alignment: .any)
@@ -62,14 +71,14 @@ class PlaneIndicator: NSObject, ARSessionDelegate {
 
             target.position = worldPos
             target.orientation = worldRotation
-            target.isEnabled = true
             
-            if isSearching {
-                isDetecting = true
-                isSearching = false
+            if state == .searching {
+                state = .detecting
                 
                 state = .detecting
                 applyTexture("target")
+                
+                delegate?.indicatorDidChangeState(newState: state)
             }
             
         } else {
@@ -81,29 +90,34 @@ class PlaneIndicator: NSObject, ARSessionDelegate {
 
             target.position = fixedPosition
             target.orientation = cameraTransform.rotation * additionalRotation
-            target.isEnabled = true
 
-            if isDetecting{
-                isDetecting = false
-                isSearching = true
+            if state == .detecting{
+                state = .searching
                 
                 state = .searching
                 applyTexture("square")
+                
+                delegate?.indicatorDidChangeState(newState: state)
             }
         }
     }
     
-    @MainActor func disable() {
+    @MainActor
+    func disable() {
         target?.isEnabled = false
         state = .disabled
+        delegate?.indicatorDidChangeState(newState: state)
     }
     
-    @MainActor func enable() {
+    @MainActor
+    func enable() {
         target?.isEnabled = true
         state = .searching
+        delegate?.indicatorDidChangeState(newState: state)
     }
     
-    @MainActor func applyTexture(_ name: String) {
+    @MainActor
+    func applyTexture(_ name: String) {
         guard let target, let texture = imageToTexture(named: name) else { return }
         
         var material = UnlitMaterial()
